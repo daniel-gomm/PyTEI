@@ -3,6 +3,22 @@ PyTEI is a minimal python interface for Hugging Face's [Text Embeddings Inferenc
 
 PyTEI supports in-memory and persistent caching for text embeddings.
 
+## Installation
+First, clone the git repository by running:
+
+```shell
+git clone https://github.com/daniel-gomm/PyTEI.git
+```
+
+Next, install this repository as python package using pip by running the following command from the [root directory](./) 
+of this repository:
+
+```shell
+pip install .
+```
+
+Add the `-e`-flag in case you want to modify the code.
+
 ## Usage
 Prerequisite for using PyTEI is a running [Text Embeddings Inference](https://github.com/huggingface/text-embeddings-inference)
 instance, for example a local docker container running TEI. Such a docker contain can be spun-up by running:
