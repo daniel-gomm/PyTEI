@@ -1,1 +1,1 @@
-from pytei.client import TEIEmbedder
+from pytei.client import TEIClient

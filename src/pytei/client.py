@@ -6,22 +6,22 @@ import json
 from pytei.store import DataStore, InMemoryDataStore
 
 
-class TEIEmbedder:
+class TEIClient:
     """
     A minimal interface for Text Embedding Inference.
 
-    This class communicates with the text embedding endpoint and caches embeddings
+    This class communicates with the text embedding inference endpoint and caches responses
     using a specified datastore.
     """
 
-    def __init__(self, data_store: DataStore = None, endpoint: str = "127.0.0.1:8080/embed", timeout: int = 10):
+    def __init__(self, embedding_store: DataStore = None, endpoint: str = "127.0.0.1:8080/embed", timeout: int = 10):
         """
         Args:
-            data_store (DataStore): Datastore to cache embeddings.
+            embedding_store (DataStore): Datastore to cache embeddings.
             endpoint (str): URL of the embedding service.
             timeout (int): Timeout for HTTP requests.
         """
-        self.data_store = data_store or InMemoryDataStore()
+        self.data_store = embedding_store or InMemoryDataStore()
         self.endpoint = endpoint
         self.timeout = timeout
 
