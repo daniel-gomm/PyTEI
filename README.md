@@ -1,2 +1,41 @@
 # PyTEI
 PyTEI is a minimal python interface for Hugging Face's [Text Embeddings Inference](https://github.com/huggingface/text-embeddings-inference).
+
+PyTEI supports in-memory and persistent caching for text embeddings.
+
+## Usage
+Prerequisite for using PyTEI is a running [Text Embeddings Inference](https://github.com/huggingface/text-embeddings-inference)
+instance, for example a local docker container running TEI. Such a docker contain can be spun-up by running:
+
+```shell
+docker run --gpus all -p 8080:80 \
+  -v $PWD/data:/data \
+  --pull always ghcr.io/huggingface/text-embeddings-inference:1.6 \
+  --model-id Alibaba-NLP/gte-Qwen2-1.5B-instruct
+```
+
+### TEI Client
+Establish a connection to TEI through a [TEIClient](./src/pytei/client.py). The client gives you access to the 
+text-embedding API of the TEI instance:
+
+```python
+from pytei import TEIClient
+
+client = TEIClient(endpoint="127.0.0.1:8080/embed")
+
+text_embedding = client.embed("Lorem Ipsum")
+```
+
+The default configuration uses in-memory caching of embeddings. For persistent caching use the 
+[DuckDBDataStore](./src/pytei/store.py) or implement your own caching solution by extending the 
+[DataStore](./src/pytei/store.py) base-class.
+
+```python
+from pytei import TEIClient
+from pytei.store import DuckDBDataStore
+
+persistent_data_store = DuckDBDataStore(db_path="data/embedding_database.duckdb")
+client = TEIClient(embedding_store=persistent_data_store, endpoint="127.0.0.1:8080/embed")
+
+text_embedding = client.embed("Lorem Ipsum")
+```
