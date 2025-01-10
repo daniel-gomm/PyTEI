@@ -31,13 +31,16 @@ docker run --gpus all -p 8080:80 \
 ```
 
 ### TEI Client
+
+> For more details check out the [Documentation](https://daniel-gomm.github.io/PyTEI/).
+
 Establish a connection to TEI through a [TEIClient](./src/pytei/client.py). The client gives you access to the 
 text-embedding API of the TEI instance:
 
 ```python
 from pytei import TEIClient
 
-client = TEIClient(endpoint="127.0.0.1:8080/embed")
+client = TEIClient(url="127.0.0.1:8080/embed")
 
 text_embedding = client.embed("Lorem Ipsum")
 ```
@@ -48,10 +51,13 @@ The default configuration uses in-memory caching of embeddings. For persistent c
 
 ```python
 from pytei import TEIClient
-from pytei.store import DuckDBDataStore
+from pytei.store import DuckDBEmbeddingStore
 
-persistent_data_store = DuckDBDataStore(db_path="data/embedding_database.duckdb")
-client = TEIClient(embedding_store=persistent_data_store, endpoint="127.0.0.1:8080/embed")
+persistent_data_store = DuckDBEmbeddingStore(db_path="data/embedding_database.duckdb")
+client = TEIClient(embedding_store=persistent_data_store, url="127.0.0.1:8080/embed")
 
 text_embedding = client.embed("Lorem Ipsum")
 ```
+
+For a more detailed description and the full description of the API checkout the 
+[Documentation](https://daniel-gomm.github.io/PyTEI/.)
