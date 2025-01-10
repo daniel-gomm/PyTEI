@@ -5,6 +5,7 @@ import numpy as np
 from hashlib import sha1
 import json
 
+from pytei.model import PredictionResult, Rank
 from pytei.store import DataStore, InMemoryDataStore
 
 
@@ -135,3 +136,11 @@ class TEIClient:
         else:
             raise AttributeError("text_input must be either a string or a list of strings.")
 
+
+    def rerank(self, query: str, texts: List[str], raw_score: bool = False, return_text: bool = False,
+               truncate: bool = False, truncation_direction: Union[Literal['left', 'right'], None] = None) -> List[Rank]:
+        raise NotImplementedError("Reranking is not yet implemented.")
+
+    def predict(self, inputs: Union[str, Tuple[str, str], List[Union[str, Tuple[str, str]]]], raw_scores: bool = False,
+                truncate: bool = False, truncation_direction: Union[Literal['left', 'right'], None] = None) -> Union[PredictionResult, List[PredictionResult]]:
+        raise NotImplementedError("Sequence classification is not yet implemented.")
