@@ -6,18 +6,18 @@ from hashlib import sha1
 import json
 
 from pytei.model import PredictionResult, Rank
-from pytei.store import DataStore, InMemoryDataStore
+from pytei.store import EmbeddingStore, InMemoryEmbeddingStore
 
 
 class TEIClient:
     """
-    A minimal interface for Text Embedding Inference.
+    A minimal interface for Hugging Face's Text Embeddings Inference.
 
     This class communicates with the text embedding inference endpoint and caches responses
     using a specified datastore.
     """
 
-    def __init__(self, embedding_store: Union[DataStore, None] = None, url: str = "http://127.0.0.1:8080", timeout: int = 10):
+    def __init__(self, embedding_store: Union[EmbeddingStore, None] = None, url: str = "http://127.0.0.1:8080", timeout: int = 10):
         """Constructor method
 
         :param embedding_store: Data store used for cacheing. Defaults to in-memory caching.
@@ -27,7 +27,7 @@ class TEIClient:
         :param timeout: Timeout in seconds.
         :type timeout: int
         """
-        self._data_store = embedding_store or InMemoryDataStore()
+        self._data_store = embedding_store or InMemoryEmbeddingStore()
         self._endpoint = url
         self._timeout = timeout
 
@@ -90,7 +90,7 @@ class TEIClient:
         :type truncation_direction: str, optional
         :param skip_cache: Whether to skip caching the embedding. Default is False.
         :return: For a single input string the single embedding, for a list of input string a list of corresponding embeddings.
-        :rtype: Union[np.ndarray, List[np.ndarray]]
+        :rtype: Union[`numpy.ndarray`, List[`numpy.ndarray`]]
         """
         # Create id for call parameters to differentiate distinct parameter combinations in the embedding cache
         call_params_id = ""
