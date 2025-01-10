@@ -89,6 +89,7 @@ class TEIClient:
         :param truncation_direction: The direction of the truncation. Default is 'right'.
         :type truncation_direction: str, optional
         :param skip_cache: Whether to skip caching the embedding. Default is False.
+        :type skip_cache: bool, optional
         :return: For a single input string the single embedding, for a list of input string a list of corresponding embeddings.
         :rtype: Union[`numpy.ndarray`, List[`numpy.ndarray`]]
         """
