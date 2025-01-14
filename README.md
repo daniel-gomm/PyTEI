@@ -59,5 +59,5 @@ client = TEIClient(embedding_store=persistent_data_store, url="127.0.0.1:8080/em
 text_embedding = client.embed("Lorem Ipsum")
 ```
 
-For a more detailed description and the full description of the API checkout the 
+For a more detailed description and the full description of the API check out the 
 [Documentation](https://daniel-gomm.github.io/PyTEI/.)
