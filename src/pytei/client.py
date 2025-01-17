@@ -119,9 +119,10 @@ class TEIClient:
             call_indices = []
             call_texts = []
             text_hashes = [sha1((input_str + call_params_id).encode()).hexdigest() for input_str in inputs]
+            cached_embedding_map = self._data_store.get_all(text_hashes)
             for index, input_str in enumerate(inputs):
                 try:
-                    embedding_results[index] = self._data_store.get(text_hashes[index])
+                    embedding_results[index] = cached_embedding_map[text_hashes[index]]
                 except KeyError:
                     call_indices.append(index)
                     call_texts.append(input_str)
@@ -130,8 +131,8 @@ class TEIClient:
                 body = self._build_embed_call_body(normalize, prompt_name, truncate, truncation_direction)
                 embeddings = self._fetch_embeddings(call_texts, body)
                 if not skip_cache:
-                    for index, embedding in enumerate(embeddings):
-                        self._data_store.put(text_hashes[call_indices[index]], embedding)
+                    keys = [text_hashes[ind] for ind in call_indices]
+                    self._data_store.put_all(keys, embeddings)
                 embedding_results[call_indices] = embeddings
             return embedding_results.tolist()
         else:
