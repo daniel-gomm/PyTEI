@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: pypi
-      url: https://pypi.org/p/PyTEIClient
+      url: https://pypi.org/p/pytei-clinent
     permissions:
       id-token: write
     steps:

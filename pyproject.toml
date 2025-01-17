@@ -3,7 +3,7 @@ requires = ["setuptools>=75.8.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "pytei"
+name = "pytei-client"
 version = "0.1.0"
 authors = [
     { name="Daniel Gomm", email="daniel.gomm@cwi.nl" },
